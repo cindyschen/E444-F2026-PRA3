@@ -4,27 +4,32 @@ from flask_moment import Moment
 from datetime import datetime
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField
+from wtforms.fields import EmailField
 from wtforms.validators import DataRequired
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'hard to guess string'
 bootstrap = Bootstrap(app)
 moment = Moment(app)
 
-class NameForm(FlaskForm):
+class Form(FlaskForm):
     name = StringField('What is your name?', validators=[DataRequired()])
+    email = EmailField('What is your UofT Email address?', validators=[DataRequired()])
     submit = SubmitField('Submit')
+
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    form = NameForm()
+    form = Form()
     if form.validate_on_submit():
         old_name = session.get('name')
         if old_name is not None and old_name != form.name.data:
             flash('Looks like you have changed your name!')
+        email = session.get('email')
+        session['email'] = form.email.data
         session['name'] = form.name.data
         return redirect(url_for('index'))
     return render_template('index.html',
-        form = form, name = session.get('name'))
+        form = form, name = session.get('name'), email = session.get('email'))
 
 @app.route('/user/<name>')
 def user(name):
