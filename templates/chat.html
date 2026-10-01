@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block title %}Flasky Chatbot{% endblock %}
+
+{% block page_content %}
+
+<div class="page-header">
+    <h1>Hello, {{ name }}!</h1>
+    <p>This is the chatbot.</p>
+</div>
+
+<div id="chat-box" style="margin-bottom: 20px;"></div>
+
+<div class="form-group">
+    <input
+        type="text"
+        id="message"
+        class="form-control"
+        placeholder="Type your message"
+    >
+</div>
+
+<button type="button" class="btn btn-primary" onclick="sendMessage()">
+    Send
+</button>
+
+<button type="button" class="btn btn-primary" onclick="logOut()">
+    Log out
+</button>
+
+<script>
+
+function logOut() {
+    window.location.href = "/logout";
+}
+async function sendMessage() {
+    const input = document.getElementById("message");
+    const message = input.value;
+
+    if (!message) {
+        return;
+    }
+
+    const response = await fetch("/chat", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ message: message })
+    });
+
+    const data = await response.json();
+
+    const chatBox = document.getElementById("chat-box");
+
+    chatBox.innerHTML +=
+        "<p><strong>You:</strong> " + message + "</p>" +
+        "<p><strong>Chatbot:</strong> " + data.reply + "</p>";
+
+    input.value = "";
+}
+</script>
+
+{% endblock %}
