@@ -7,3 +7,4 @@ https://github.com/miguelgrinberg/flasky
 
 <img width="815" height="454" alt="{E2FBDE97-F05E-45E7-8A62-4B8922A7B3BA}" src="https://github.com/user-attachments/assets/b09b731f-56fd-406e-b655-4c3cee54eee2" />
 
+<img width="328" height="518" alt="{D9DDAD77-32E5-454E-B0BD-5533DF35C2F2}" src="https://github.com/user-attachments/assets/c28e68a2-65f3-48f0-8232-b8b6bce33bc9" />
